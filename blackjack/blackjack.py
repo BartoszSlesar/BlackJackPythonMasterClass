@@ -80,6 +80,30 @@ def deal_player():
         result_text.set("Dealer Wins!")
 
 
+def start_game():
+    deal_player()
+    dealer_hand.append(deal_card(dealer_card_frame))
+    dealer_score_label.set(score_hand(dealer_hand))
+    deal_player()
+
+
+def start_new_game():
+    global dealer_card_frame
+    dealer_card_frame.destroy()
+    dealer_card_frame = tkinter.Frame(card_frame, background="green")
+    dealer_card_frame.grid(row=0, column=1, sticky="ew", rowspan=2)
+    global player_card_frame
+    player_card_frame.destroy()
+    player_card_frame = tkinter.Frame(card_frame, background="green")
+    player_card_frame.grid(row=2, column=1, sticky="ew", rowspan=2)
+    player_hand.clear()
+    dealer_hand.clear()
+    global deck
+    deck = list(cards)
+    random.shuffle(deck)
+    start_game()
+
+
 mainWindow = tkinter.Tk()
 mainWindow.title("Black Jack")
 mainWindow.geometry("640x480")
@@ -114,18 +138,18 @@ dealer_button.grid(row=0, column=0)
 
 player_button = tkinter.Button(button_frame, text="Player", command=deal_player)
 player_button.grid(row=0, column=1)
+new_game_button = tkinter.Button(button_frame, text="New game", command=start_new_game)
+new_game_button.grid(row=0, column=2)
 
 # load cards
 cards = []
 load_images(cards)
-# create a new deck of cards and shuffle them
+# create a new deck of cards and shuffle them global
 deck = list(cards)
 random.shuffle(deck)
 
 # Create the list to store the dealer's and player's hands
 dealer_hand = []
 player_hand = []
-deal_player()
-dealer_hand.append(deal_card(dealer_card_frame))
-deal_player()
+start_game()
 mainWindow.mainloop()
