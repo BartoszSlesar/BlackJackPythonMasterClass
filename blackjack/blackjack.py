@@ -55,7 +55,20 @@ def score_hand(hand):
 
 
 def deal_dealer():
-    deal_card(dealer_card_frame)
+    dealer_score = score_hand(dealer_hand)
+    while 0 < dealer_score < 17:
+        dealer_hand.append(deal_card(dealer_card_frame))
+        dealer_score_label.set(dealer_score)
+        dealer_score = score_hand(dealer_hand)
+    player_score = score_hand(player_hand)
+    if player_score > 21:
+        result_text.set("Dealer Wins!")
+    elif dealer_score > 21 or dealer_score < player_score:
+        result_text.set("Player Wins!")
+    elif dealer_score > player_score:
+        result_text.set("Dealer Wins!")
+    else:
+        result_text.set("draw!")
 
 
 def deal_player():
@@ -87,7 +100,6 @@ dealer_card_frame.grid(row=0, column=1, sticky="ew", rowspan=2)
 
 player_score_label = tkinter.IntVar()
 
-
 tkinter.Label(card_frame, text="Player", background="green", fg="white").grid(row=2, column=0)
 tkinter.Label(card_frame, textvariable=player_score_label, background="green", fg="white").grid(row=3, column=0)
 # embedded frame to hold the card images
@@ -113,5 +125,7 @@ random.shuffle(deck)
 # Create the list to store the dealer's and player's hands
 dealer_hand = []
 player_hand = []
-
+deal_player()
+dealer_hand.append(deal_card(dealer_card_frame))
+deal_player()
 mainWindow.mainloop()
