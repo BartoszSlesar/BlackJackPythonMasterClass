@@ -107,6 +107,13 @@ def shuffle_deck():
     random.shuffle(deck)
 
 
+# play game im blackjack was imported
+def play():
+    start_game()
+    mainWindow.mainloop()
+
+
+# initialization of black jack game
 mainWindow = tkinter.Tk()
 mainWindow.title("Black Jack")
 mainWindow.geometry("640x480")
@@ -157,5 +164,6 @@ shuffle_deck()
 # Create the list to store the dealer's and player's hands
 dealer_hand = []
 player_hand = []
-start_game()
-mainWindow.mainloop()
+
+if __name__ == '__main__':
+    play()
